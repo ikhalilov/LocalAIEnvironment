@@ -34,7 +34,7 @@ search:
   # Filter results. 0: None, 1: Moderate, 2: Strict
   safe_search: 0
   # Existing autocomplete backends: "360search", "baidu", "brave", "dbpedia", "duckduckgo", "google", "yandex",
-  # "mwmbl", "naver", "seznam", "sogou", "stract", "swisscows", "quark", "qwant", "wikipedia" -
+  # "mwmbl", "naver", "seznam", "sogou", "startpage", "stract", "swisscows", "quark", "qwant", "wikipedia" -
   # leave blank to turn it off by default.
   autocomplete: ""
   # minimun characters to type before autocompleter starts
@@ -77,6 +77,7 @@ search:
   # formats: [html, csv, json, rss]
   formats:
     - html
+    - json
 
 server:
   # Is overwritten by ${SEARXNG_PORT} and ${SEARXNG_BIND_ADDRESS}
@@ -110,16 +111,15 @@ server:
     X-Robots-Tag: noindex, nofollow
     Referrer-Policy: no-referrer
 
-redis:
-  # URL to connect redis database. Is overwritten by ${SEARXNG_REDIS_URL}.
-  # https://docs.searxng.org/admin/settings/settings_redis.html#settings-redis
-  url: false
+valkey:
+  # URL to connect valkey database. Is overwritten by ${SEARXNG_VALKEY_URL}.
+  # https://docs.searxng.org/admin/settings/settings_valkey.html#settings-valkey
+  url: valkey://localhost:6379/0
+  # url: false
 
 ui:
   # Custom static path - leave it blank if you didn't change
   static_path: ""
-  # Is overwritten by ${SEARXNG_STATIC_USE_HASH}.
-  static_use_hash: false
   # Custom templates path - leave it blank if you didn't change
   templates_path: ""
   # query_in_title: When true, the result page's titles contains the query
@@ -1583,6 +1583,20 @@ engines:
     url: https://thepiratebay.org/
     timeout: 3.0
 
+  - name: pixabay images
+    engine: pixabay
+    pixabay_type: images
+    categories: images
+    shortcut: pixi
+    disabled: true
+
+  - name: pixabay videos
+    engine: pixabay
+    pixabay_type: videos
+    categories: videos
+    shortcut: pixv
+    disabled: true
+
   - name: pixiv
     shortcut: pv
     engine: pixiv
@@ -1795,10 +1809,10 @@ engines:
     shortcut: rt
     disabled: true
 
-  # Required dependency: redis
-  # - name: myredis
+  # Required dependency: valkey
+  # - name: myvalkey
   #   shortcut : rds
-  #   engine: redis_server
+  #   engine: valkey_server
   #   exact_match_only: false
   #   host: '127.0.0.1'
   #   port: 6379
