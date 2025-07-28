@@ -119,8 +119,6 @@ valkey:
 ui:
   # Custom static path - leave it blank if you didn't change
   static_path: ""
-  # Is overwritten by ${SEARXNG_STATIC_USE_HASH}.
-  static_use_hash: false
   # Custom templates path - leave it blank if you didn't change
   templates_path: ""
   # query_in_title: When true, the result page's titles contains the query
@@ -177,7 +175,7 @@ outgoing:
   request_timeout: 3.0
   # the maximum timeout in seconds
   # max_request_timeout: 10.0
-  # suffix of searx_useragent, could contain information like an email address
+  # suffix of searxng_useragent, could contain information like an email address
   # to the administrator
   useragent_suffix: ""
   # The maximum number of concurrent connections that may be established.
@@ -2496,8 +2494,7 @@ engines:
 
   - name: wordnik
     engine: wordnik
-    shortcut: def
-    categories: [dictionaries]
+    shortcut: wnik
     timeout: 5.0
 
   - name: woxikon.de synonyme

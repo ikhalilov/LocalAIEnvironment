@@ -114,8 +114,8 @@ server:
 valkey:
   # URL to connect valkey database. Is overwritten by ${SEARXNG_VALKEY_URL}.
   # https://docs.searxng.org/admin/settings/settings_valkey.html#settings-valkey
-  url: valkey://localhost:6379/0
-  # url: false
+  # url: valkey://localhost:6379/0
+  url: false
 
 ui:
   # Custom static path - leave it blank if you didn't change
@@ -176,7 +176,7 @@ outgoing:
   request_timeout: 3.0
   # the maximum timeout in seconds
   # max_request_timeout: 10.0
-  # suffix of searx_useragent, could contain information like an email address
+  # suffix of searxng_useragent, could contain information like an email address
   # to the administrator
   useragent_suffix: ""
   # The maximum number of concurrent connections that may be established.
@@ -2495,8 +2495,7 @@ engines:
 
   - name: wordnik
     engine: wordnik
-    shortcut: def
-    categories: [dictionaries]
+    shortcut: wnik
     timeout: 5.0
 
   - name: woxikon.de synonyme
