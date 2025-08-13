@@ -1278,6 +1278,15 @@ engines:
       require_api_key: false
       results: HTML
 
+  - name: marginalia
+    engine: marginalia
+    shortcut: mar
+    # To get an API key, please follow the instructions at
+    # - https://about.marginalia-search.com/article/api/
+    # api_key: ...
+    disabled: true
+    inactive: true
+
   - name: mastodon users
     engine: mastodon
     mastodon_type: accounts
@@ -2595,11 +2604,6 @@ engines:
     engine: wttr
     shortcut: wttr
     timeout: 9.0
-
-  - name: yummly
-    engine: yummly
-    shortcut: yum
-    disabled: true
 
   - name: brave
     engine: brave
