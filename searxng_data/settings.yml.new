@@ -24,7 +24,6 @@ brand:
   wiki_url: https://github.com/searxng/searxng/wiki
   issue_url: https://github.com/searxng/searxng/issues
   # custom:
-  #   maintainer: "Jon Doe"
   #   # Custom entries in the footer: [title]: [link]
   #   links:
   #     Uptime: https://uptime.searxng.org/history/darmarit-org
@@ -665,12 +664,6 @@ engines:
     # read https://docs.searxng.org/dev/engines/online/core.html
     api_key: ""
     inactive: true
-
-  - name: cppreference
-    engine: cppreference
-    shortcut: cpp
-    paging: false
-    disabled: true
 
   - name: crossref
     engine: crossref
