@@ -16,7 +16,7 @@ services:
       - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
       - SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>&format=json
       - QDRANT_URI=http://qdrant:6333
-      - QDRANT_API_KEY=""
+      - QDRANT_API_KEY=
       - VECTOR_DB=qdrant
       - ENABLE_WEBSOCKET_SUPPORT="true"
       - WEBSOCKET_MANAGER="valkey"
