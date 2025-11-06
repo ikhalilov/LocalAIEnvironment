@@ -125,6 +125,17 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  docling-serve:
+    image: ghcr.io/docling-project/docling-serve-cu128:latest
+    container_name: docling-serve
+    ports:
+      - "5001:5001"
+    environment:
+      DOCLING_SERVE_ENABLE_UI: "true"
+      NVIDIA_VISIBLE_DEVICES: "all"
+    runtime: nvidia
+    restart: always
+
 volumes:
   open-webui:
   searxng_data:
