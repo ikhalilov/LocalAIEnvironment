@@ -109,14 +109,29 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  docling-models:
+    image: ghcr.io/docling-project/docling-serve-cu128:latest
+    container_name: docling-models
+    command: "docling-tools models download --output-dir=/modelcache 'layout' 'tableformer' 'code_formula' 'picture_classifier' 'smolvlm' 'granite_vision' 'easyocr' 'rapidocr'"
+    volumes:
+      - ./modelcache:/modelcache
+    restart: "no"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+
   docling-serve:
     image: ghcr.io/docling-project/docling-serve-cu128:latest
     container_name: docling-serve
+    depends_on:
+      - docling-models
     ports:
       - "5001:5001"
+    volumes:
+      - ./modelcache:/modelcache
     environment:
-      DOCLING_SERVE_ENABLE_UI: "true"
-      NVIDIA_VISIBLE_DEVICES: "all"
+      - DOCLING_SERVE_ENABLE_UI=true
+      - NVIDIA_VISIBLE_DEVICES=all
+      - DOCLING_SERVE_ARTIFACTS_PATH=/modelcache
     runtime: nvidia
     restart: always
 
