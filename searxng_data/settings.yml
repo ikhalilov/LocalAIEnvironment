@@ -80,7 +80,7 @@ search:
 
 server:
   # Is overwritten by ${SEARXNG_PORT} and ${SEARXNG_BIND_ADDRESS}
-  port: 8080
+  port: 8888
   bind_address: "127.0.0.1"
   # public URL of the instance, to ensure correct inbound links. Is overwritten
   # by ${SEARXNG_BASE_URL}.
@@ -234,7 +234,7 @@ plugins:
     active: true
 
   searx.plugins.ahmia_filter.SXNGPlugin:
-    active: false
+    active: true
 
   searx.plugins.hostnames.SXNGPlugin:
     active: true
@@ -434,10 +434,12 @@ engines:
   # Requires Tor
   - name: ahmia
     engine: ahmia
+    # Might do up to two requests to perform a search.
+    # Since Tor is already slow by nature, the timeout is set very high.
+    timeout: 20.0
     categories: onions
     enable_http: true
     shortcut: ah
-    disabled: true
 
   - name: anaconda
     engine: xpath
@@ -1624,6 +1626,7 @@ engines:
     engine: pixiv
     disabled: true
     inactive: true
+    remove_ai_images: false
     pixiv_image_proxies:
       - https://pximg.example.org
       # A proxy is required to load the images. Hosting an image proxy server
@@ -1792,9 +1795,9 @@ engines:
   #   categories: files
   #   disabled: true
 
-  # - name: radio browser
-  #   engine: radio_browser
-  #   shortcut: rb
+  - name: radio browser
+    engine: radio_browser
+    shortcut: rb
 
   - name: reddit
     engine: reddit
@@ -2070,7 +2073,6 @@ engines:
     categories: onions
     enable_http: true
     shortcut: tch
-    disabled: true
 
   # TubeArchivist is a self-hosted Youtube archivist software.
   # https://docs.searxng.org/dev/engines/online/tubearchivist.html
