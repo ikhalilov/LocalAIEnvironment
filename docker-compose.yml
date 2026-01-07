@@ -1,6 +1,6 @@
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:latest
     container_name: open_webui
     depends_on:
       - postgres
@@ -17,6 +17,11 @@ services:
       - ENABLE_WEBSOCKET_SUPPORT="true"
       - WEBSOCKET_MANAGER="valkey"
       - WEBSOCKET_VALKEY_URL="valkey://valkey:6379/1"
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/webuidb
+      - PGVECTOR_DB_URL=postgresql://postgres:postgres@postgres:5432/webuidb
+      - VECTOR_DB=pgvector
+      - VECTOR_STORE_TYPE=pgvector
+      - WEBUI_SECRET_KEY=your-secret-key-here-change-this-in-production
     ports:
       - "3000:8080"
     extra_hosts:
