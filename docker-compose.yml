@@ -135,6 +135,8 @@ services:
       - ./modelcache:/modelcache
     environment:
       - DOCLING_SERVE_ENABLE_UI=true
+      - DOCLING_SERVE_ENABLE_REMOTE_SERVICES=true
+      - UVICORN_WORKERS=1
       - NVIDIA_VISIBLE_DEVICES=all
       - DOCLING_SERVE_ARTIFACTS_PATH=/modelcache
     runtime: nvidia

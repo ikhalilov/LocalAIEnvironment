@@ -35,7 +35,7 @@ search:
   # Existing autocomplete backends: "360search", "baidu", "brave", "dbpedia", "duckduckgo", "google", "yandex",
   # "mwmbl", "naver", "seznam", "sogou", "startpage", "stract", "swisscows", "quark", "qwant", "wikipedia" -
   # leave blank to turn it off by default.
-  autocomplete: "duckduckgo"
+  autocomplete: ""
   # minimun characters to type before autocompleter starts
   autocomplete_min: 4
   # backend for the favicon near URL in search results.
@@ -76,7 +76,6 @@ search:
   # formats: [html, csv, json, rss]
   formats:
     - html
-    - json
 
 server:
   # Is overwritten by ${SEARXNG_PORT} and ${SEARXNG_BIND_ADDRESS}
@@ -95,7 +94,7 @@ server:
   # If your instance owns a /etc/searxng/settings.yml file, then set the following
   # values there.
 
-  secret_key: "Z&%<R0o6U8?XgXm_5W5&2RQOP3,5.x1q"  # Is overwritten by ${SEARXNG_SECRET}
+  secret_key: "ultrasecretkey"  # Is overwritten by ${SEARXNG_SECRET}
   # Proxy image results through SearXNG. Is overwritten by ${SEARXNG_IMAGE_PROXY}
   image_proxy: false
   # 1.0 and 1.1 are supported
