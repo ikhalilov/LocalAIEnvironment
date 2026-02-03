@@ -9,14 +9,14 @@ services:
       - .env
     environment:
       - OLLAMA_BASE_URL=http://host.docker.internal:11434
-      - ENABLE_RAG_WEB_SEARCH="True"
-      - RAG_WEB_SEARCH_ENGINE="searxng"
+      - ENABLE_RAG_WEB_SEARCH=true
+      - RAG_WEB_SEARCH_ENGINE=searxng
       - RAG_WEB_SEARCH_RESULT_COUNT=3
       - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
       - SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>&format=json
-      - ENABLE_WEBSOCKET_SUPPORT="true"
-      - WEBSOCKET_MANAGER="valkey"
-      - WEBSOCKET_VALKEY_URL="valkey://valkey:6379/1"
+      - ENABLE_WEBSOCKET_SUPPORT=true
+      - WEBSOCKET_MANAGER=valkey
+      - WEBSOCKET_VALKEY_URL=valkey://valkey:6379/1
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/webuidb
       - PGVECTOR_DB_URL=postgresql://postgres:postgres@postgres:5432/webuidb
       - VECTOR_DB=pgvector
@@ -159,7 +159,11 @@ services:
     ports:
       - "5000:8080"
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1",
+        ]
       interval: 5s
       timeout: 5s
       retries: 3
@@ -167,6 +171,19 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  speaches:
+    image: ghcr.io/speaches-ai/speaches:latest-cuda
+    container_name: speaches
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    runtime: nvidia
+    volumes:
+      - ./speaches:/home/ubuntu/.cache/huggingface/hub
+      - ./speaches/model_aliases.json:/home/ubuntu/speaches/model_aliases.json
 
 volumes:
   open-webui:
