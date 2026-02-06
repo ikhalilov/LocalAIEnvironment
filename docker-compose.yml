@@ -86,7 +86,7 @@ services:
       retries: 5
 
   valkey:
-    image: docker.io/valkey/valkey:9.0.0-alpine3.22
+    image: docker.io/valkey/valkey:9.0.2-alpine3.23
     container_name: valkey
     ports:
       - "6379:6379"
@@ -113,77 +113,6 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
-
-  docling-models:
-    image: ghcr.io/docling-project/docling-serve-cu128:latest
-    container_name: docling-models
-    command: "docling-tools models download --output-dir=/modelcache 'layout' 'tableformer' 'code_formula' 'picture_classifier' 'smolvlm' 'granite_vision' 'easyocr' 'rapidocr'"
-    volumes:
-      - ./modelcache:/modelcache
-    restart: "no"
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-
-  docling-serve:
-    image: ghcr.io/docling-project/docling-serve-cu128:latest
-    container_name: docling-serve
-    depends_on:
-      - docling-models
-    ports:
-      - "5001:5001"
-    volumes:
-      - ./modelcache:/modelcache
-    environment:
-      - DOCLING_SERVE_ENABLE_UI=true
-      - DOCLING_SERVE_ENABLE_REMOTE_SERVICES=true
-      - UVICORN_WORKERS=1
-      - NVIDIA_VISIBLE_DEVICES=all
-      - DOCLING_SERVE_ARTIFACTS_PATH=/modelcache
-    runtime: nvidia
-    restart: always
-
-  memorizer:
-    image: petabridge/memorizer:latest
-    restart: unless-stopped
-    container_name: memorizer
-    environment:
-      - ConnectionStrings__Storage=Host=postgres;Port=5432;Database=postgmem;Username=postgres;Password=postgres
-      - MEMORIZER_Embeddings__ApiUrl=http://host.docker.internal:11434 # http://ollama:11434
-      - MEMORIZER_Embeddings__Model=embeddinggemma:300m # all-minilm:33m-l12-v2-fp16
-      - MEMORIZER_LLM__ApiUrl=http://host.docker.internal:11434
-      - MEMORIZER_LLM__Model=gpt-oss:20b # qwen2:0.5b
-      - MEMORIZER_LLM__Timeout=00:02:00
-      - MEMORIZER_LLM__Chunking__MinCharactersForChunking=2000
-      - MEMORIZER_LLM__Chunking__TargetChunkSize=1500
-      - MEMORIZER_Server__CanonicalUrl=http://localhost:5000
-    ports:
-      - "5000:8080"
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1",
-        ]
-      interval: 5s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  speaches:
-    image: ghcr.io/speaches-ai/speaches:latest-cuda
-    container_name: speaches
-    env_file:
-      - .env
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    runtime: nvidia
-    volumes:
-      - ./speaches:/home/ubuntu/.cache/huggingface/hub
-      - ./speaches/model_aliases.json:/home/ubuntu/speaches/model_aliases.json
 
 volumes:
   open-webui:
