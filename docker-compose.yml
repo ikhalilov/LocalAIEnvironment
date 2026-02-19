@@ -114,6 +114,51 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  docling:
+    image: ghcr.io/docling-project/docling-serve-cu130:v1.13.0
+    container_name: docling
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+    environment:
+      - DOCLING_SERVE_ARTIFACTS_PATH=/opt/app-root/src/.cache/docling/models
+      - DOCLING_OCR_ENGINE=easyocr
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=5001
+      - CUDA_VISIBLE_DEVICES=0,1
+    volumes:
+      - ./models:/opt/app-root/src/.cache/docling/models
+    restart: unless-stopped
+    command: >
+      bash -c "
+        set -e &&
+        MODELS_DIR=\"$$DOCLING_SERVE_ARTIFACTS_PATH\" &&
+        echo '🔍 Cleaning RapidOCR + Downloading all models...' &&
+        rm -rf \"$$MODELS_DIR/RapidOcr\" &&
+        mkdir -p \"$$MODELS_DIR\" &&
+        docling-tools models download layout easyocr rapidocr -o \"$$MODELS_DIR\" &&
+        touch \"$$MODELS_DIR/.easyocr_downloaded\" &&
+        echo '✅ All models (incl. RapidOCR) ready' &&
+        echo '🚀 Starting docling-serve...' &&
+        exec docling-serve run
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+
+
 volumes:
   open-webui:
   searxng_data:
