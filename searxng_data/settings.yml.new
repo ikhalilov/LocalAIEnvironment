@@ -2585,29 +2585,6 @@ engines:
       results: HTML
       language: de
 
-  - name: seekr news
-    engine: seekr
-    shortcut: senews
-    categories: news
-    seekr_category: news
-    disabled: true
-
-  - name: seekr images
-    engine: seekr
-    network: seekr news
-    shortcut: seimg
-    categories: images
-    seekr_category: images
-    disabled: true
-
-  - name: seekr videos
-    engine: seekr
-    network: seekr news
-    shortcut: sevid
-    categories: videos
-    seekr_category: videos
-    disabled: true
-
   - name: stract
     engine: stract
     shortcut: str
@@ -2663,6 +2640,12 @@ engines:
     engine: wttr
     shortcut: wttr
     timeout: 9.0
+
+  - name: braveapi
+    engine: braveapi
+    # read https://docs.searxng.org/dev/engines/online/brave.html
+    api_key: ""
+    inactive: true
 
   - name: brave
     engine: brave
