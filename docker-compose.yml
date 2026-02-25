@@ -115,7 +115,7 @@ services:
         max-file: "1"
 
   docling:
-    image: ghcr.io/docling-project/docling-serve-cu130:v1.13.0
+    image: ghcr.io/docling-project/docling-serve-cu130:v1.14.0
     container_name: docling
     ports:
       - "5001:5001"
@@ -127,6 +127,8 @@ services:
       - UVICORN_HOST=0.0.0.0
       - UVICORN_PORT=5001
       - CUDA_VISIBLE_DEVICES=0,1
+      - CUDA_LAUNCH_BLOCKING=1
+      - TORCH_USE_CUDA_DSA=1
     volumes:
       - ./models:/opt/app-root/src/.cache/docling/models
     restart: unless-stopped
@@ -156,8 +158,6 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-
-
 
 volumes:
   open-webui:
