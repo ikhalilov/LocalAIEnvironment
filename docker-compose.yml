@@ -115,7 +115,7 @@ services:
         max-file: "1"
 
   docling:
-    image: ghcr.io/docling-project/docling-serve-cu130:v1.14.0
+    image: ghcr.io/docling-project/docling-serve-cu130:v1.14.3
     container_name: docling
     ports:
       - "5001:5001"
