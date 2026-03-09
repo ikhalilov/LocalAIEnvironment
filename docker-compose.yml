@@ -64,13 +64,19 @@ services:
     environment:
       - SEARXNG_URL=http://searxng
       - OLLAMA_HOST=http://host.docker.internal:11434
+      - N8N_DIAGNOSTICS_ENABLED=false
     volumes:
       - n8n_data:/home/node/.n8n
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+      - 1.0.0.1
+      - 8.8.4.4
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   postgres:
-    image: pgvector/pgvector:0.8.1-pg18-trixie
+    image: pgvector/pgvector:0.8.2-pg18-trixie
     container_name: postgres
     restart: unless-stopped
     ports:
@@ -86,7 +92,7 @@ services:
       retries: 5
 
   valkey:
-    image: docker.io/valkey/valkey:9.0.2-alpine3.23
+    image: docker.io/valkey/valkey:9.0.3-alpine3.23
     container_name: valkey
     ports:
       - "6379:6379"
@@ -115,7 +121,7 @@ services:
         max-file: "1"
 
   docling:
-    image: ghcr.io/docling-project/docling-serve-cu130:v1.14.3
+    image: ghcr.io/docling-project/docling-serve-cu130:v1.15.0
     container_name: docling
     ports:
       - "5001:5001"
@@ -159,8 +165,23 @@ services:
               count: all
               capabilities: [gpu]
 
+  open-terminal:
+    image: ghcr.io/open-webui/open-terminal:latest
+    container_name: open-terminal
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - OPEN_TERMINAL_API_KEY=${OPEN_TERMINAL_API_KEY}
+      - OPEN_TERMINAL_MAX_SESSIONS=16
+      - OPEN_TERMINAL_ENABLE_TERMINAL=true
+      - OPEN_TERMINAL_ENABLE_NOTEBOOKS=true
+    volumes:
+      - open-terminal:/home/user
+
 volumes:
   open-webui:
+  open-terminal:
   searxng_data:
   n8n_data:
   postgres_data:
