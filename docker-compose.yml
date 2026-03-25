@@ -132,7 +132,6 @@ services:
       - DOCLING_OCR_ENGINE=easyocr
       - UVICORN_HOST=0.0.0.0
       - UVICORN_PORT=5001
-      - CUDA_VISIBLE_DEVICES=0,1
       - CUDA_LAUNCH_BLOCKING=1
       - TORCH_USE_CUDA_DSA=1
     volumes:
