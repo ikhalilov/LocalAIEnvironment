@@ -427,18 +427,21 @@ engines:
     search_type: search
     categories: [general]
     shortcut: aol
+    disabled: true
 
   - name: aol images
     engine: aol
     search_type: image
     categories: [images]
     shortcut: aoli
+    disabled: true
 
   - name: aol videos
     engine: aol
     search_type: video
     categories: [videos]
     shortcut: aolv
+    disabled: true
 
   - name: arch linux wiki
     engine: archlinux
@@ -686,22 +689,6 @@ engines:
     engine: yep
     shortcut: yep
     categories: general
-    search_type: web
-    timeout: 15
-    disabled: true
-
-  - name: yep images
-    engine: yep
-    shortcut: yepi
-    categories: images
-    search_type: images
-    disabled: true
-
-  - name: yep news
-    engine: yep
-    shortcut: yepn
-    categories: news
-    search_type: news
     disabled: true
 
   - name: currency
@@ -1034,6 +1021,11 @@ engines:
     shortcut: gitea
     disabled: true
 
+  - name: gmx
+    engine: gmx
+    shortcut: gmx
+    disabled: true
+
   - name: goodreads
     engine: goodreads
     shortcut: good
@@ -1222,7 +1214,7 @@ engines:
 
   - name: karmasearch videos
     engine: karmasearch
-    categories: [general, web]
+    categories: [videos, web]
     search_type: videos
     shortcut: kav
 
