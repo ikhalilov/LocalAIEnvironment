@@ -804,9 +804,44 @@ engines:
     display_type: ["infobox"]
     categories: [general]
 
+  - name: dogpile
+    engine: dogpile
+    shortcut: dog
+    dogpile_categ: search
+    categories: general
+    disabled: true
+
+  - name: dogpile images
+    engine: dogpile
+    shortcut: dogi
+    dogpile_categ: images
+    categories: images
+    disabled: true
+
+  - name: dogpile videos
+    engine: dogpile
+    shortcut: dogv
+    dogpile_categ: videos
+    categories: videos
+    disabled: true
+
+  - name: dogpile news
+    engine: dogpile
+    shortcut: dogn
+    dogpile_categ: news
+    categories: news
+    disabled: true
+
+  # duckduckgo uses html.duckduckgo.com,
+  # duckduckgo web uses duckduckgo.com
   - name: duckduckgo
     engine: duckduckgo
     shortcut: ddg
+
+  - name: duckduckgo web
+    engine: duckduckgo_web
+    shortcut: ddgw
+    disabled: true
 
   - name: duckduckgo images
     engine: duckduckgo_extra
@@ -888,6 +923,27 @@ engines:
   - name: findthatmeme
     engine: findthatmeme
     shortcut: ftm
+    disabled: true
+
+  - name: fireball
+    engine: fireball
+    shortcut: fire
+    categories: general
+    fireball_category: web
+    disabled: true
+
+  - name: fireball news
+    engine: fireball
+    shortcut: firen
+    categories: news
+    fireball_category: news
+    disabled: true
+
+  - name: fireball videos
+    engine: fireball
+    shortcut: firev
+    categories: videos
+    fireball_category: videos
     disabled: true
 
   - name: flaticon
@@ -1132,6 +1188,22 @@ engines:
     shortcut: hn
     disabled: true
 
+  - name: heexy
+    engine: heexy
+    categories: general
+    heexy_categ: web
+    shortcut: he
+    disabled: true
+    inactive: true
+
+  - name: heexy images
+    engine: heexy
+    categories: images
+    heexy_categ: image
+    shortcut: hei
+    disabled: true
+    inactive: true
+
   - name: hex
     engine: hex
     shortcut: hex
@@ -1223,40 +1295,40 @@ engines:
     shortcut: iq
     disabled: true
 
+  # - name: kagi
+  #   engine: kagi
+  #   categories: [general, web]
+  #   shortcut: kg
+  #   api_key: ""  # required
+  #   kagi_categ: search
+
+  # - name: kagi.news
+  #   engine: kagi
+  #   categories: [news, web]
+  #   shortcut: kgn
+  #   api_key: ""  # required
+  #   kagi_categ: news
+
+  # - name: kagi.images
+  #   engine: kagi
+  #   categories: [images, web]
+  #   paging: false
+  #   shortcut: kgi
+  #   api_key: ""  # required
+  #   kagi_categ: images
+
+  # - name: kagi.videos
+  #   engine: kagi
+  #   categories: [videos, web]
+  #   shortcut: kgv
+  #   api_key: ""  # required
+  #   kagi_categ: videos
+
   - name: jisho
     engine: jisho
     shortcut: js
     timeout: 3.0
     disabled: true
-
-  - name: karmasearch
-    engine: karmasearch
-    categories: [general, web]
-    search_type: web
-    shortcut: ka
-    inactive: true
-
-  - name: karmasearch images
-    engine: karmasearch
-    categories: [images, web]
-    search_type: images
-    shortcut: kai
-    paging: false
-    inactive: true
-
-  - name: karmasearch videos
-    engine: karmasearch
-    categories: [videos, web]
-    search_type: videos
-    shortcut: kav
-    inactive: true
-
-  - name: karmasearch news
-    engine: karmasearch
-    categories: [news, web]
-    search_type: news
-    shortcut: kan
-    inactive: true
 
   - name: kickass
     engine: kickass
@@ -1990,6 +2062,14 @@ engines:
   #       - ...
   #   disabled: true
 
+  - name: seekninja
+    engine: seekninja
+    shortcut: sen
+    # very slow due to its server-side events architecture
+    timeout: 10
+    disabled: true
+    inactive: true
+
   - name: semantic scholar
     engine: semantic_scholar
     shortcut: se
@@ -2083,6 +2163,22 @@ engines:
     use_source_url: true
     shortcut: ts
     disabled: true
+
+  - name: tiger
+    engine: tiger
+    categories: general
+    tiger_category: Websuche
+    shortcut: tig
+    disabled: true
+    inactive: true
+
+  - name: tiger news
+    engine: tiger
+    categories: news
+    tiger_category: News
+    shortcut: tign
+    disabled: true
+    inactive: true
 
   - name: tmdb
     engine: xpath
@@ -2538,6 +2634,38 @@ engines:
   - name: repology
     engine: repology
     shortcut: rep
+    disabled: true
+    inactive: true
+
+  - name: swisscows
+    engine: swisscows
+    categories: general
+    swisscows_category: web
+    results_per_page: 20
+    shortcut: sw
+    disabled: true
+    inactive: true
+
+  - name: swisscows images
+    engine: swisscows
+    categories: images
+    swisscows_category: images
+    shortcut: swi
+    disabled: true
+    inactive: true
+
+  - name: swisscows videos
+    engine: swisscows
+    categories: videos
+    swisscows_category: videos
+    results_per_page: 10
+    shortcut: swv
+    disabled: true
+    inactive: true
+
+  - name: swisscows news
+    engine: swisscows_news
+    shortcut: swn
     disabled: true
     inactive: true
 

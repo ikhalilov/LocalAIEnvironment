@@ -56,25 +56,6 @@ services:
         max-size: "1m"
         max-file: "1"
 
-  n8n:
-    image: docker.n8n.io/n8nio/n8n
-    container_name: n8n
-    ports:
-      - "5678:5678"
-    environment:
-      - SEARXNG_URL=http://searxng
-      - OLLAMA_HOST=http://host.docker.internal:11434
-      - N8N_DIAGNOSTICS_ENABLED=false
-    volumes:
-      - n8n_data:/home/node/.n8n
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
-      - 1.0.0.1
-      - 8.8.4.4
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
   postgres:
     image: pgvector/pgvector:0.8.2-pg18-trixie
     container_name: postgres
@@ -120,50 +101,6 @@ services:
         max-size: "1m"
         max-file: "1"
 
-  docling:
-    image: ghcr.io/docling-project/docling-serve-cu130:main
-    container_name: docling
-    ports:
-      - "5001:5001"
-    env_file:
-      - .env
-    environment:
-      - DOCLING_SERVE_ARTIFACTS_PATH=/opt/app-root/src/.cache/docling/models
-      - DOCLING_OCR_ENGINE=easyocr
-      - UVICORN_HOST=0.0.0.0
-      - UVICORN_PORT=5001
-      - CUDA_LAUNCH_BLOCKING=1
-      - TORCH_USE_CUDA_DSA=1
-    volumes:
-      - ./models:/opt/app-root/src/.cache/docling/models
-    restart: unless-stopped
-    command: >
-      bash -c "
-        set -e &&
-        MODELS_DIR=\"$$DOCLING_SERVE_ARTIFACTS_PATH\" &&
-        echo '🔍 Cleaning RapidOCR + Downloading all models...' &&
-        rm -rf \"$$MODELS_DIR/RapidOcr\" &&
-        mkdir -p \"$$MODELS_DIR\" &&
-        docling-tools models download layout easyocr rapidocr -o \"$$MODELS_DIR\" &&
-        touch \"$$MODELS_DIR/.easyocr_downloaded\" &&
-        echo '✅ All models (incl. RapidOCR) ready' &&
-        echo '🚀 Starting docling-serve...' &&
-        exec docling-serve run
-      "
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-
   open-terminal:
     image: ghcr.io/open-webui/open-terminal:latest
     container_name: open-terminal
@@ -182,6 +119,5 @@ volumes:
   open-webui:
   open-terminal:
   searxng_data:
-  n8n_data:
   postgres_data:
   valkey-data:
