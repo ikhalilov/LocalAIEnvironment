@@ -485,3 +485,12 @@ $RECYCLE.BIN/
 
 # local model cache
 models/
+
+# agents
+.agents/
+
+# opencode
+.opencode/
+
+# dsh
+.dsh

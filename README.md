@@ -1,6 +1,6 @@
 # Local AI Environment
 
-A lightweight Docker stack that brings together **Open‑WebUI**, **Searxng**, **n8n**, PostgreSQL with the pgvector extension, Valkey, and Docling.
+A lightweight Docker stack that brings together **Open‑WebUI**, **Searxng**, PostgreSQL with the pgvector extension and Valkey.
 
 The stack is ready to run locally with a single `docker compose up` command.
 
@@ -19,7 +19,5 @@ Internal docs:
 
 - Open WebUI (https://github.com/open-webui/open-webui)
 - Searxng (https://github.com/searxng/searxng)
-- n8n (https://github.com/n8n-io/n8n)
-- Docling (https://github.com/docling-project/docling-serve)
 - PostgreSQL + pgvector (https://github.com/pgvector/pgvector)
 - Valkey (https://github.com/valkey-io/valkey)
